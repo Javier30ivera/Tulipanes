@@ -4,7 +4,7 @@ function obtenDia() {
     let dia = new Date().getDate();
     let ntulipan = parseInt(dia);
    /* console.log("Es el día "+dia+" deben existir "+dia+" tulipanes");*/
-    for (let i = 1; i < 30; i++) {
+    for (let i = 1; ntulipan < 30; i++) {
        agregarTulipan();
     }
 }
