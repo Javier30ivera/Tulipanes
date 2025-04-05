@@ -1,5 +1,302 @@
-html,body{
-    height: 100%;
-    width: 100%;
-    background: radial-gradient(#F50087 0%, #a21061 100%);
+
+
+:root {
+    /* Paleta de colores Tulipan */
+    --petal-color-light: #f8b0c0; /* Rosa claro / Melocotón */
+    --petal-color-mid: #e85070;   /* Rosa medio */
+    --petal-color-dark: #d03050;  /* Rosa oscuro base */
+    /*Tallo*/
+    --stem-color-light: #65b065;
+    --stem-color-dark: #3e853e;
+    --leaf-color-light: #75c075;
+    --leaf-color-dark: #4a954a;
+    /*Fondo*/
+    --bg-sky: #a0d8ef;
+    --bg-ground: #d3e8d3;
 }
+
+body {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    min-height: 100vh;
+    background: linear-gradient(to bottom, var(--bg-sky) 0%, var(--bg-ground) 100%);
+    margin: 0;
+    overflow: hidden;
+}
+
+/*Texto de la pagina*/
+.texto {
+    text-align: center;
+    padding: 40px 20px;
+    border-radius: 15px; 
+    font-family: 'Arial', sans-serif; /* Fuente legible y moderna */
+    color: #333; 
+}
+
+.texto h1 {
+    color: #c27ba0;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Sombra suave en el título */
+}
+  
+.texto p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+  
+.texto strong {
+    color: #2e8b57; 
+}
+  
+  /* Opcional: Estilo para el corazón */
+.texto p::after {
+    content: ' '; /* Añade el corazón al final del párrafo */
+}
+
+#contenedor-Tulipanes{
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    min-height: 600px;
+    margin: 0;
+    overflow: hidden;
+}
+
+.tulip-container {
+    position: relative;
+    width: 200px; /* Un poco más ancho para la flor más llena */
+    height: 450px;
+    perspective: 1000px; /* Aumentamos perspectiva */
+    perspective-origin: 50% 200px; /* Ajustamos punto de vista */
+}
+
+.tulip-body {
+    position: relative;
+    display: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    animation: gentle-sway 8s infinite ease-in-out;
+    transform-origin: bottom center;
+}
+
+.tulip-body:hover{
+    scale: 1.05;
+}
+
+.love-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -380%);
+  opacity: 0; /* Inicialmente oculto */
+  transition: opacity 0.3s ease; /* Transición suave para la opacidad */
+  font-size: 1.5em;
+  color: #c27ba0; /* Color del mensaje */
+  pointer-events: none; /* Para que no interfiera con el hover */
+}
+
+.tulip-body:hover + .love-message {
+  opacity: 1; /* Mostrar el mensaje al hacer hover */
+}
+
+.stem {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 14px; /* Ligeramente más grueso */
+    height: 300px; /* Más alto */
+    background: linear-gradient(to right, var(--stem-color-dark), var(--stem-color-light) 70%, var(--stem-color-dark));
+    border-radius: 8px 8px 0 0;
+    transform-style: preserve-3d;
+    box-shadow: inset -4px 0 8px rgba(0, 0, 0, 0.2);
+}
+
+.leaf {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    width: 45px; /* Más ancha */
+    height: 100px; /* Más larga */
+    /* Gradiente simulando pliegue central */
+    background: linear-gradient(to right, var(--leaf-color-dark), var(--leaf-color-light) 50%, var(--leaf-color-dark));
+    border-radius: 60% 10% 80% 10% / 90% 10% 40% 10%;
+    transform-origin: bottom center; /* Pivota desde el centro de la base */
+    transform-style: preserve-3d;
+    box-shadow: inset 0 -10px 15px rgba(0, 0, 0, 0.15);
+    filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.1)); /* Sombra exterior suave */
+}
+
+.leaf.leaf-1 {
+    transform: translateX(-55%) rotateZ(-20deg) rotateY(30deg) rotateX(5deg);
+    z-index: 5; /* Hojas delante de algunos pétalos */
+    animation: leaf-flutter 7s infinite alternate ease-in-out 0.5s;
+}
+
+.leaf.leaf-2 {
+    bottom: 70px;
+    height: 120px;
+    width: 40px;
+    /* Reflejado y rotado diferente */
+    transform: translateX(-40%) scaleX(-1) rotateZ(15deg) rotateY(25deg) rotateX(-5deg);
+    background: linear-gradient(to right, #458b45, #6aba6a 50%, #458b45); /* Tono ligeramente diferente */
+    border-radius: 50% 15% 70% 15% / 85% 15% 50% 15%;
+    z-index: 4;
+     animation: leaf-flutter 7.5s infinite alternate ease-in-out 1s; /* Diferente timing */
+}
+
+
+.flower {
+    position: absolute;
+    bottom: 250px; /* Ajustar altura */
+    left: 50%;
+    width: 120px; /* Más ancho para acomodar pétalos */
+    height: 140px; /* Más alto */
+    transform: translateX(-50%) translateZ(20px) rotateY(-5deg);
+    transform-style: preserve-3d;
+
+}
+
+.petal {
+    position: absolute;
+    bottom: 0;
+    left: 50%; /* Todos parten del centro */
+    width: 55px; /* Pétalos más anchos */
+    height: 110px; /* Y más largos */
+    /* Gradiente más rico */
+    background: linear-gradient(to bottom,
+                var(--petal-color-light) 0%,
+                var(--petal-color-mid) 70%,
+                var(--petal-color-dark) 100%);
+    /* Forma de pétalo más elaborada */
+    border-radius: 50% 50% 20% 20% / 80% 80% 40% 40%;
+    transform-origin: bottom center;
+    box-shadow: inset 0 -10px 20px rgba(0, 0, 0, 0.15), /* Sombra interior */
+                 0 5px 10px rgba(0, 0, 0, 0.1); /* Sombra exterior ligera */
+    transform-style: preserve-3d; /* Para posibles pseudo-elementos */
+
+     --open-rotY: 0deg;
+     --open-rotX: 0deg;
+     --open-transZ: 0px;
+     --open-transX: -50%; /* Centrado por defecto */
+     --open-scale: 1;
+
+     --closed-rotY: 0deg;
+     --closed-rotX: 15deg; /* Ligeramente inclinado */
+     --closed-transZ: -5px; /* Ligeramente atrás */
+     --closed-scale: 0.9;
+
+     transform: translateX(var(--open-transX))
+                rotateY(var(--open-rotY))
+                rotateX(var(--open-rotX))
+                translateZ(var(--open-transZ))
+                scale(var(--open-scale));
+
+    animation: bloom 7s infinite alternate cubic-bezier(0.45, 0.05, 0.55, 0.95); /* Más suave */
+}
+
+/* --- Posicionamiento y estilo específico de pétalos --- */
+
+/* Grupo Exterior (más abiertos) */
+.petal-1 { /* Frente Izquierda */
+     --open-rotY: -45deg; --open-rotX: 10deg; --open-transZ: -15px;
+     --closed-rotY: -15deg; --closed-rotX: 25deg; --closed-transZ: -5px;
+     z-index: 2;
+     animation-delay: 0s;
+}
+.petal-3 { /* Frente Derecha */
+     --open-rotY: 45deg; --open-rotX: 10deg; --open-transZ: -15px;
+     --closed-rotY: 15deg; --closed-rotX: 25deg; --closed-transZ: -5px;
+     z-index: 2;
+     animation-delay: 0.2s;
+}
+.petal-5 { /* Trasero (más difícil de ver) */
+     --open-rotY: 180deg; --open-rotX: 20deg; --open-transZ: -40px; --open-scale: 0.95;
+     --closed-rotY: 180deg; --closed-rotX: 30deg; --closed-transZ: -20px; --closed-scale: 0.85;
+     background: linear-gradient(to bottom, #f0a0b0, #d84060, #c02040); /* Más oscuro atrás */
+     z-index: 1;
+     animation-delay: 0.4s;
+}
+
+/* Grupo Interior (más erguidos y adelante) */
+ .petal-2 { /* Centro Izquierda */
+    height: 125px; /* Más altos */
+    width: 50px;
+     --open-rotY: -20deg; --open-rotX: 5deg; --open-transZ: 5px;
+     --closed-rotY: -5deg; --closed-rotX: 15deg; --closed-transZ: 0px;
+     background: linear-gradient(to bottom, #fcc0d0, #f06080, #e04060); /* Ligeramente más brillante */
+     z-index: 3;
+     animation-delay: 0.1s;
+ }
+  .petal-4 { /* Centro Derecha */
+     height: 125px;
+     width: 50px;
+     --open-rotY: 20deg; --open-rotX: 5deg; --open-transZ: 5px;
+     --closed-rotY: 5deg; --closed-rotX: 15deg; --closed-transZ: 0px;
+     background: linear-gradient(to bottom, #fcc0d0, #f06080, #e04060);
+     z-index: 3;
+     animation-delay: 0.3s;
+ }
+ .petal-6 { /* Centro Frontal */
+     height: 130px; /* El más alto */
+     width: 52px;
+     --open-rotY: 0deg; --open-rotX: -5deg; --open-transZ: 15px; /* Más adelante e inclinado */
+     --closed-rotY: 0deg; --closed-rotX: 5deg; --closed-transZ: 8px;
+     background: linear-gradient(to bottom, #ffd0e0, #f87090, #e85070); /* El más brillante */
+     z-index: 4;
+     animation-delay: 0.15s;
+ }
+
+
+/* ---- ANIMACIONES ---- */
+
+/* Animación de florecer */
+@keyframes bloom {
+    0% {
+         transform: translateX(var(--open-transX))
+                    rotateY(var(--closed-rotY))
+                    rotateX(var(--closed-rotX))
+                    translateZ(var(--closed-transZ))
+                    scale(var(--closed-scale));
+         filter: brightness(0.95);
+    }
+    100% {
+         transform: translateX(var(--open-transX))
+                    rotateY(var(--open-rotY))
+                    rotateX(var(--open-rotX))
+                    translateZ(var(--open-transZ))
+                    scale(var(--open-scale));
+        filter: brightness(1.05);
+    }
+}
+
+
+/* Animación de balanceo suave */
+@keyframes gentle-sway {
+    0%, 100% { transform: rotateY(-4deg) rotateZ(-1.5deg) translateX(2px); }
+    50% { transform: rotateY(4deg) rotateZ(1.5deg) translateX(-2px); }
+}
+
+/* Animación de aleteo para la hoja */
+ @keyframes leaf-flutter {
+     0% { transform: rotateZ(var(--base-rotZ)) rotateY(var(--base-rotY)) rotateX(var(--base-rotX) - 3deg); }
+     100% { transform: rotateZ(var(--base-rotZ)) rotateY(var(--base-rotY) + 5deg) rotateX(var(--base-rotX) + 3deg); }
+     /* Necesitamos definir las variables base en el elemento */
+ }
+
+ /* Definir variables para animación de hoja (basadas en transform inicial) */
+ .leaf.leaf-1 {
+     --base-rotZ: -20deg; --base-rotY: 30deg; --base-rotX: 5deg;
+      /* Re-aplicamos transform inicial usando variables para que flutter funcione */
+      transform: translateX(-55%) rotateZ(var(--base-rotZ)) rotateY(var(--base-rotY)) rotateX(var(--base-rotX));
+ }
+ .leaf.leaf-2 {
+      --base-rotZ: 15deg; --base-rotY: 25deg; --base-rotX: -5deg;
+      transform: translateX(-40%) scaleX(-1) rotateZ(var(--base-rotZ)) rotateY(var(--base-rotY)) rotateX(var(--base-rotX));
+ }
