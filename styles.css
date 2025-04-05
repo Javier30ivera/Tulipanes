@@ -300,4 +300,25 @@ body {
  .leaf.leaf-2 {
       --base-rotZ: 15deg; --base-rotY: 25deg; --base-rotX: -5deg;
       transform: translateX(-40%) scaleX(-1) rotateZ(var(--base-rotZ)) rotateY(var(--base-rotY)) rotateX(var(--base-rotX));
- }
+}
+
+/*Resposivo para movil*/
+@media (max-width: 768px) {
+    .texto {
+      padding: 20px 10px; 
+    }
+  
+    .texto h1 {
+      font-size: 2em; 
+    }
+  
+    .texto p {
+      font-size: 1em; 
+      line-height: 1.4; 
+    }
+
+    .tulip-container {
+        transform: scale(0.8); 
+      }
+}
+
